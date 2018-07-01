@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const authenticatios = require('../middlewares/protector')
 
 //import controller
 const contactController = require('../controller/contactController');
@@ -8,7 +9,7 @@ const contactController = require('../controller/contactController');
 router.get('/', contactController.getAllContact);
 
 //postContact
-router.post('/', contactController.postContact);
+router.post('/',  contactController.postContact);
 
 //getSingleContact
 router.get('/:id', contactController.getSingleContact);

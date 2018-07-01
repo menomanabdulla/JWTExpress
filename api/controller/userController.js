@@ -1,5 +1,7 @@
 const User = require('../model/userModel');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
 
 //singUpUser
 const singUpUser = (req, res, next) => {
@@ -68,10 +70,25 @@ const singInUser = (req, res, next) => {
                     message: 'Validation faild!! Password or Email is not valid'
                 })
             }else{
-              
+                const token = jwt.sign({  
+                   email: user.email,
+                   _id: user._id
+                    }, 'SECRET',{
+                        expiresIn: '1h'
+                    }
+                )
+
+                /*Jwt.verify(token,secretKey,function(err,token){
+                    if(err){
+                      // respond to request with error
+                    }else{
+                      // continue with the request
+                    }
+                })*/
+                
                 res.status(200).json({
                     message: ((req.body.email).split("@"))[0]+' Login Successfully',
-
+                    token
                 })
             }
         }
