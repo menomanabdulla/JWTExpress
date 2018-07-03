@@ -33,6 +33,23 @@ app.use('/api/contacts', contactRouter);
 
 app.use('/api/users', userRouter);
 
+
+
+//error handaling
+//404 error handaling
+app.use((req,res,next)=>{
+    const err = new Error('Not Found')
+    err.status = 404
+    next(err)
+})
+
+//500 error handaling
+app.use((error,req,res,next)=>{
+    res.status(error.status || 500)
+    res.json({
+        error
+    })
+})
 //ROOT ROUTE
 app.get('/', (req, res) => {
     res.json({
